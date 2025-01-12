@@ -1,47 +1,37 @@
 package CurrencyConvert;
 
 import java.util.HashMap;
-import java.util.Map;
+
+//instead of hardcoding the currencies, we can dynamically pull from our hashmap
 
 public class CurrencyConverter {
-    private HashMap<String,String> currencies;
-    private double amount;
+    private HashMap<String,Double> exchangeRates;
 
     public CurrencyConverter(){
-        this.currencies = new HashMap<>();
-        this.amount = 0;
+        this.exchangeRates = new HashMap<>();
+        addRates();
     }
 
-    public void addAmount(double amount){
-        this.amount = amount;
+    public void addRates(){
+        exchangeRates.put("USD_TO_GBP", 0.86);
+        exchangeRates.put("GBP_TO_USD", 1.16);
+
     }
 
-    public void addToCurrency(String currency, String exchange){
-        this.currencies.put(currency, exchange);        
-    }
+    public double convert(String source, String target, Double amount){
+        // dynamically convert the users input to the key in our hashmap
+        double conversion= 0;
+        String key  = source + "_TO_" + target; 
 
-
-    public void dollarsToGBP(){
-        //let's do some psuedo
-
-        // Our aim in this method is to convert the currency to the exchange based on what the user wants
-        // for example if the currency is USD and wants to convert to GBP
-        // we multiply the USD by 0.8 to get GBP 
-        // then we need to print out the returned value
-
-        double exchangeRate = 0;
-
-        for (Map.Entry<String, String> entry : currencies.entrySet()) {
-            String key = entry.getKey(); // the key (e.g., "USD")
-            String value = entry.getValue(); // the value (e.g., "GBP")
-            
-            if (key.equals("USD") && value.equals("GBP")) {
-                exchangeRate = this.amount * 0.86;
-            }
+        // find the "key" in our exchangeRate and then multiply it by the value
+        if(exchangeRates.containsKey(key)){
+            conversion= amount * exchangeRates.get(key);
+        }else{
+            System.out.println("Not found");
+            return 0;
         }
-    
-        System.out.println(exchangeRate);
-
+        return conversion;
     }
+
     
 }

@@ -22,19 +22,16 @@ public class UserInterface {
                 break;
             }
 
-            Integer amount = Integer.valueOf(input);
-            converter.addAmount(amount);
-
+            Double amount = Double.parseDouble(input);
             System.out.println("Source Currency: ");
-            String currencyInput = scanner.nextLine();
+            String source = scanner.nextLine().toUpperCase();
 
             System.out.println("Target Currency: ");
-            String exchange = scanner.nextLine();
+            String target = scanner.nextLine().toUpperCase();
 
-            converter.addToCurrency(currencyInput, exchange);
+            double result =converter.convert(source,target, amount);
 
-            converter.dollarsToGBP();
-
+            System.out.println("Conversion: "+ result);
         }
     }
 }
